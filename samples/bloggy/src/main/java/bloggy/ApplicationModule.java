@@ -1,5 +1,7 @@
 package bloggy;
 
+import bloggy.dao.*;
+import bloggy.dao.impl.*;
 import com.codeforces.commons.io.http.HttpMethod;
 import com.codeforces.commons.text.StringUtil;
 import com.google.inject.Binder;
@@ -11,12 +13,6 @@ import org.nocturne.main.ApplicationContext;
 import org.nocturne.main.Component;
 import bloggy.captions.dao.CaptionDao;
 import bloggy.captions.dao.impl.CaptionDaoImpl;
-import bloggy.dao.DateDao;
-import bloggy.dao.PostDao;
-import bloggy.dao.UserDao;
-import bloggy.dao.impl.DateDaoImpl;
-import bloggy.dao.impl.PostDaoImpl;
-import bloggy.dao.impl.UserDaoImpl;
 import bloggy.web.annotation.PostOnly;
 import bloggy.web.page.IndexPage;
 
@@ -32,7 +28,10 @@ public class ApplicationModule implements Module {
         binder.bind(DateDao.class).to(DateDaoImpl.class);
         binder.bind(CaptionDao.class).to(CaptionDaoImpl.class);
         binder.bind(UserDao.class).to(UserDaoImpl.class);
+        binder.bind(NoteDao.class).to(NoteDaoImpl.class);
         binder.bind(PostDao.class).to(PostDaoImpl.class);
+        binder.bind(CommentDao.class).to(CommentDaoImpl.class);
+
 
         binder.bindInterceptor(new AbstractMatcher<Class<?>>() {
             @Override

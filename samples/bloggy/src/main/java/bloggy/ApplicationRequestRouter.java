@@ -14,5 +14,6 @@ public class ApplicationRequestRouter extends LinkedRequestRouter {
         Links.add(EnterPage.class);
         Links.add(LogoutDataPage.class);
         Links.add(PostViewPage.class);
+        Links.add(RegisterPage.class);
     }
 }

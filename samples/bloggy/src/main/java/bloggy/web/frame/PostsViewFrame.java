@@ -1,6 +1,5 @@
 package bloggy.web.frame;
 
-import com.google.inject.Inject;
 import bloggy.dao.PostDao;
 import bloggy.model.Post;
 import bloggy.model.User;
@@ -8,33 +7,23 @@ import bloggy.model.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PostsViewFrame extends ApplicationFrame {
-    @Inject
-    private PostDao postDao;
+public class PostsViewFrame extends NotesViewFrame<Post, PostDao, User> {
 
-    private User postsUser;
+    @Override
+    protected void parseNote(Post note) {
+        setClassName("post");
+        PostViewFrame noteViewFrame = getInstance(PostViewFrame.class);
+        noteViewFrame.setNote(note);
+        noteViewFrame.setShortMode(true);
 
-    public void setPostsUser(User postsUser) {
-        this.postsUser = postsUser;
+        parse("post" + note.getId(), noteViewFrame);
     }
 
     @Override
-    public void action() {
-        putPosts(postsUser == null ? postDao.findAll() : postDao.findByUser(postsUser));
-    }
-
-    private void putPosts(List<Post> posts) {
-        for (Post post : posts) {
-            PostViewFrame postViewFrame = getInstance(PostViewFrame.class);
-            postViewFrame.setPost(post);
-            postViewFrame.setShortMode(true);
-            parse("post" + post.getId(), postViewFrame);
-        }
-        putPostIds(posts);
-    }
-
-    private void putPostIds(List<Post> posts) {
-        put("postIds", posts.stream().map(Post::getId).collect(Collectors.toList()));
-        put("note", postDao.findNote());
+    protected List<Post> getProperties(List<Post> notes) {
+        put("coms", notes.stream().map(note -> {
+            return noteDao.getComments(note);
+        }).collect(Collectors.toList()));
+        return notes;
     }
 }

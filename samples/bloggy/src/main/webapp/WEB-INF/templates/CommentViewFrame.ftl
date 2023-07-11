@@ -1,36 +1,27 @@
 <#-- @ftlvariable name="shortMode" type="java.lang.Boolean" -->
-<#-- @ftlvariable name="postUser" type="bloggy.model.User" -->
-<#-- @ftlvariable name="post" type="bloggy.model.Post" -->
+<#-- @ftlvariable name="commentUser" type="bloggy.model.User" -->
+<#-- @ftlvariable name="comment" type="bloggy.model.Comment" -->
 <#import "common.ftl" as c>
 <template>
-    <article class="_post" data-postId="${post.id}">
-        <section class="_title">
-            <a href="<@link name="PostViewPage" postId=post.id/>">${post.title?html}</a>
-        </section>
-        <header>
-            {{By}} ${postUser.name}
-        </header>
-        <div class="_text">
+    <article class="_comment" data-commentId="${comment.id}">
+        <div class="left">
             <div class="_userpicFrameWrapper">
                 <@frame name="userpicFrame"/>
             </div>
 
-            <@c.shortText maxLen=1500 short=shortMode entity=post/>
         </div>
+        <div class="right">
+            <header>${comment.getUpdateTime()?datetime}</header>
+            <@c.shortText maxLen=500 short=shortMode entity=comment/>
+        </div>
+
     </article>
 </template>
 
-<script>
-    $("._full").css("cursor", "pointer").click(function () {
-        var $post = $(this).closest("article._post");
-        $("._preview").hide();
-        $("._complete").show();
-    });
-</script>
 
 <style type="text/less">
-  ._post {
-    margin-bottom: 5px;
+  ._comment {
+    margin-bottom: @larger-gap-size;
 
     header {
       font-size: @smaller-font-size;
@@ -71,4 +62,17 @@
     }
   }
 
+  article._comment {
+    display: flex;
+    justify-content: center;
+  }
+
+  .right {
+    width: 90%;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
 </style>
+
+

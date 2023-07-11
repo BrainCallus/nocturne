@@ -3,6 +3,7 @@ package bloggy.dao.impl;
 import com.google.inject.Singleton;
 import bloggy.dao.UserDao;
 import bloggy.model.User;
+import org.jacuzzi.core.Jacuzzi;
 
 @Singleton
 public class UserDaoImpl extends ApplicationDaoImpl<User> implements UserDao {
@@ -28,4 +29,28 @@ public class UserDaoImpl extends ApplicationDaoImpl<User> implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public User findByLogin(String login) {
+        return findOnlyBy("login=?", login);
+    }
+
+    @Override
+    public boolean save(User user, String password) {
+        super.save(user);
+        user.setId(findByLogin(user.getLogin()).getId());
+        try {
+            setPassword(user, password);
+        } catch (Exception e) {
+            super.delete(user);
+            return false;
+        }
+        return true;
+    }
+
+    private void setPassword(User user, String password) {
+        String query = "UPDATE `user` SET `passwordSha` = SHA1(CONCAT(?, ?, ?)) WHERE `user`.`login` = ?;"; //password, salt
+        getJacuzzi().execute(query, user.getId(), password, PASSWORD_SALT, user.getLogin());
+    }
+
 }

@@ -12,5 +12,8 @@ public class IndexPage extends WebPage {
     @Override
     public void action() {
         parse("postsViewFrame", postsViewFrame);
+
     }
+
 }
+

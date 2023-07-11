@@ -1,5 +1,6 @@
 package bloggy.web.page;
 
+import bloggy.model.User;
 import com.google.inject.Inject;
 import org.nocturne.annotation.Action;
 import org.nocturne.annotation.Parameter;
@@ -10,6 +11,8 @@ import org.nocturne.validation.ValidationException;
 import org.nocturne.validation.Validator;
 import bloggy.dao.UserDao;
 import bloggy.web.annotation.PostOnly;
+
+import java.nio.file.LinkOption;
 
 @Link("enter")
 public class EnterPage extends WebPage {
@@ -38,11 +41,15 @@ public class EnterPage extends WebPage {
     public void onEnter(@Parameter(name = "login", stripMode = Parameter.StripMode.NONE) String login,
                         @Parameter(name = "password", stripMode = Parameter.StripMode.NONE) String password) {
         authenticate(userDao.findByLoginAndPassword(login, password));
+        setMessage("Welcome back " + login);
         abortWithRedirect(IndexPage.class);
     }
 
     @Override
     public void action() {
-        // No operations.
+        User user = getUser();
+        if(user!=null){
+            abortWithRedirect(IndexPage.class);
+        }
     }
 }

@@ -5,27 +5,15 @@ import bloggy.dao.PostDao;
 import bloggy.model.Post;
 import bloggy.model.User;
 
-import java.util.List;
-
 @Singleton
-public class PostDaoImpl extends ApplicationDaoImpl<Post> implements PostDao {
-    @Override
-    public Post find(long id) {
-        return super.find(id);
-    }
-
-    @Override
-    public List<Post> findAll() {
-        return findBy("NOT deleted ORDER BY updateTime DESC");
-    }
-
-    @Override
-    public List<Post> findByUser(User user) {
-        return findBy("userId=? AND NOT deleted ORDER BY updateTime DESC", user.getId());
-    }
-
+public class PostDaoImpl extends NoteDaoImpl<Post, User> implements PostDao {
     @Override
     public String findNote() {
         return "note11";
+    }
+
+    @Override
+    public long getComments(Post post) {
+        return getJacuzzi().findLong("SELECT COUNT(*) FROM `comment` WHERE `postId`=?", post.getId());
     }
 }

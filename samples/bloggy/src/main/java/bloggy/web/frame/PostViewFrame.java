@@ -1,35 +1,7 @@
 package bloggy.web.frame;
 
-import com.google.inject.Inject;
-import bloggy.dao.UserDao;
 import bloggy.model.Post;
-import bloggy.model.User;
 
-public class PostViewFrame extends ApplicationFrame {
-    @Inject
-    private UserDao userDao;
+public class PostViewFrame extends NoteViewFrame<Post> {
 
-    @Inject
-    private UserpicFrame userpicFrame;
-
-    private boolean shortMode;
-    private Post post;
-
-    public void setShortMode(boolean shortMode) {
-        this.shortMode = shortMode;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    @Override
-    public void action() {
-        put("shortMode", shortMode);
-        put("post", post);
-        User postUser = userDao.find(post.getUserId());
-        put("postUser", postUser);
-        userpicFrame.setUserpicUser(postUser);
-        parse("userpicFrame", userpicFrame);
-    }
 }

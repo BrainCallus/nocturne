@@ -2,7 +2,6 @@ package bloggy.web.page;
 
 import com.google.inject.Inject;
 import org.nocturne.link.Link;
-import bloggy.dao.PostDao;
 import bloggy.model.User;
 import bloggy.web.frame.PostsViewFrame;
 
@@ -17,7 +16,7 @@ public class MyPostsPage extends WebPage {
         if (user == null) {
             abortWithRedirect(EnterPage.class);
         } else {
-            postsViewFrame.setPostsUser(user);
+            postsViewFrame.setNotesEntity(user);
             parse("postsViewFrame", postsViewFrame);
         }
     }
