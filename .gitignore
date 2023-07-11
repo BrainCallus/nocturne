@@ -21,3 +21,4 @@ target
 /samples/helloworld/helloworld.log
 /samples/bloggy/*.iml
 /samples/bloggy/*.log
+/samples/bloggy/apache-tomcat-9.0.68
