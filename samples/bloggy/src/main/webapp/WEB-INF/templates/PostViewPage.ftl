@@ -39,11 +39,8 @@
                 <div class="_complete" style="display: none;">
                     <#if user??>
                         <@commentForm/>
-
                     </#if>
                 </div>
-
-
             </#if>
         </div>
         <@frame name="commentsViewFrame"/>
@@ -103,7 +100,6 @@
     cursor: pointer;
   }
 
-  /* Фактическое всплывающее окно (появляется сверху) */
   .popup .popuptext {
     visibility: hidden;
     width: 360px;

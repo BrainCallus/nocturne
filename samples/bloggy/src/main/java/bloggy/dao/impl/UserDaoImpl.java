@@ -49,7 +49,7 @@ public class UserDaoImpl extends ApplicationDaoImpl<User> implements UserDao {
     }
 
     private void setPassword(User user, String password) {
-        String query = "UPDATE `user` SET `passwordSha` = SHA1(CONCAT(?, ?, ?)) WHERE `user`.`login` = ?;"; //password, salt
+        String query = "UPDATE `user` SET `passwordSha` = SHA1(CONCAT(?, ?, ?)) WHERE `user`.`login` = ?;";
         getJacuzzi().execute(query, user.getId(), password, PASSWORD_SALT, user.getLogin());
     }
 

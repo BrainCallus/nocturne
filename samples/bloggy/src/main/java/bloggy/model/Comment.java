@@ -12,5 +12,4 @@ public class Comment extends Note {
         this.postId = postId;
     }
 
-
 }

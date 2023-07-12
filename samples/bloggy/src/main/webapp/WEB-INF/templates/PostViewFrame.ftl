@@ -31,6 +31,7 @@
 <style type="text/less">
   ._post {
     margin-bottom: 5px;
+    margin-top: 10px;
 
     header {
       font-size: @smaller-font-size;

@@ -1,11 +1,11 @@
-<#-- @ftlvariable name="postProperties" type="bloggy.model.Post[]" -->
-<#-- @ftlvariable name="coms" type="java.lang.Long[]" -->
+<#-- @ftlvariable name="posts" type="bloggy.model.Post[]" -->
+<#-- @ftlvariable name="commentNums" type="java.lang.Long[]" -->
 
 <template>
     <section class="_posts">
-        <#if postProperties??>
+        <#if posts??>
             <#assign i=0/>
-            <#list postProperties as post>
+            <#list posts as post>
                 <div class="post_container">
                     <@frame name="post${post.id}"/>
                     <div class="post-footer">
@@ -15,7 +15,7 @@
                         </div>
                         <div class="comments">
                             <a href="<@link name="PostViewPage" postId=post.id/>#comments">
-                                ${coms[i]}
+                                ${commentNums[i]}
                                 <img src="/assets/img/comments-36x30.png" alt="comments"/>
                             </a>
                         </div>
@@ -31,7 +31,7 @@
 
 <style>
     .post_container {
-        margin-bottom: 2.5em;
+        margin-bottom: 2em;
     }
 
     .post-footer {
@@ -75,7 +75,8 @@
         justify-content: flex-end;
 
     }
-    .comments a{
+
+    .comments a {
         display: flex;
         align-items: flex-start;
         flex-direction: row-reverse;

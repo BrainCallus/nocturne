@@ -11,7 +11,6 @@ public class PostsViewFrame extends NotesViewFrame<Post, PostDao, User> {
 
     @Override
     protected void parseNote(Post note) {
-        setClassName("post");
         PostViewFrame noteViewFrame = getInstance(PostViewFrame.class);
         noteViewFrame.setNote(note);
         noteViewFrame.setShortMode(true);
@@ -20,10 +19,8 @@ public class PostsViewFrame extends NotesViewFrame<Post, PostDao, User> {
     }
 
     @Override
-    protected List<Post> getProperties(List<Post> notes) {
-        put("coms", notes.stream().map(note -> {
-            return noteDao.getComments(note);
-        }).collect(Collectors.toList()));
-        return notes;
+    protected void putProperties(List<Post> notes) {
+        put("commentNums", notes.stream().map(note -> noteDao.getComments(note)).collect(Collectors.toList()));
+        put("posts", notes);
     }
 }

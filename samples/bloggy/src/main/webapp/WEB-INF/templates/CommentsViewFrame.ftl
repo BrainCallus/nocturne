@@ -1,8 +1,8 @@
-<#-- @ftlvariable name="commentProperties" type="java.lang.Long[]" -->
+<#-- @ftlvariable name="commentIds" type="java.lang.Long[]" -->
 
 <template>
-    <#if commentProperties??>
-        <#list commentProperties as commentId>
+    <#if commentIds??>
+        <#list commentIds as commentId>
             <div class="_single_comment">
                 <@frame name="comment${commentId}"/>
             </div>

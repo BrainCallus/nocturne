@@ -11,7 +11,6 @@ public class CommentsViewFrame extends NotesViewFrame<Comment, CommentDao, Post>
 
     @Override
     protected void parseNote(Comment note) {
-        setClassName("comment");
         CommentViewFrame noteViewFrame = getInstance(CommentViewFrame.class);
         noteViewFrame.setNote(note);
         noteViewFrame.setShortMode(true);
@@ -20,8 +19,8 @@ public class CommentsViewFrame extends NotesViewFrame<Comment, CommentDao, Post>
     }
 
     @Override
-    protected List<Long> getProperties(List<Comment> notes) {
-        return notes.stream().map(Comment::getId).collect(Collectors.toList());
+    protected void putProperties(List<Comment> notes) {
+        put("commentIds", notes.stream().map(Comment::getId).collect(Collectors.toList()));
     }
 
     public long getCommentsAmount() {

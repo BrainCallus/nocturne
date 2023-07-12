@@ -9,7 +9,6 @@ public class NoteViewFrame<T extends Note> extends ApplicationFrame {
 
     @Inject
     private UserDao userDao;
-
     @Inject
     private UserpicFrame userpicFrame;
 

@@ -22,9 +22,9 @@ public class RegisterPage extends WebPage {
     public boolean validateRegister(@Parameter(name = "login", stripMode = Parameter.StripMode.NONE) String login,
                                     @Parameter(name = "name", stripMode = Parameter.StripMode.NONE) String name,
                                     @Parameter(name = "password", stripMode = Parameter.StripMode.NONE) String password) {
-        addValidator("name", new OptionalValidator("[\\D\\w+\\s{1}]*[\\D\\w+]+", 3, "Only latin letters and delimiters expected"));
-        addValidator("login", new OptionalValidator("[\\w+\\s{1}]*\\w+", 3, "Only latin letters, numerals and delimiters expected"));
-        addValidator("password", new OptionalValidator("\\S+", 5, "Should not contain delimiters"));
+        addValidator("name", new OptionalValidator("[[a-zA-Z]+\\s{1}]*[[a-zA-Z]+]+", 3L, 50L, "Only latin letters and delimiters expected"));
+        addValidator("login", new OptionalValidator("[\\w+\\s{1}]*\\w+", 3L, 30L, "Only latin letters, numerals and delimiters expected"));
+        addValidator("password", new OptionalValidator("\\S+", 5L, 64L, "Should not contain delimiters"));
         addValidator("password", new Validator() {
             @Override
             public void run(String ignored) throws ValidationException {
@@ -58,7 +58,7 @@ public class RegisterPage extends WebPage {
     @Override
     public void action() {
         User user = getUser();
-        if(user!=null){
+        if (user != null) {
             abortWithRedirect(IndexPage.class);
         }
     }

@@ -7,44 +7,64 @@ import java.util.regex.Pattern;
 public class OptionalValidator extends BaseValidator {
 
     private final Pattern pattern;
-    private final long length;
-    private final String message;
+    private Long minLength;
+    private Long maxLength;
+    private String patternMessage;
     private static final String DEFAULT_MESSAGE = "Unexpected characters were found.";
 
 
     public OptionalValidator(String regex) {
         pattern = Pattern.compile(regex);
-        length = -1;
-        message = DEFAULT_MESSAGE;
     }
 
-    public OptionalValidator(String regex, long length) {
+    public OptionalValidator(String regex, Long minLength, Long maxLength) {
         pattern = Pattern.compile(regex);
-        this.length = length;
-        message = DEFAULT_MESSAGE;
+        this.minLength = minLength;
+        this.maxLength = maxLength;
     }
 
     public OptionalValidator(String regex, String message) {
         pattern = Pattern.compile(regex);
-        this.message = message;
-        length = -1;
+        this.patternMessage = message;
     }
 
-    public OptionalValidator(String regex, long length, String message) {
+    public OptionalValidator(String regex, Long minLength, Long maxLength, String message) {
         pattern = Pattern.compile(regex);
-        this.length = length;
-        this.message = message;
+        this.minLength = minLength;
+        this.maxLength = maxLength;
+        this.patternMessage = message;
     }
 
     @Override
     public void run(String value) throws ValidationException {
         super.run(value);
-        if ((length > 0 && value.length() < length)) {
-            throw new ValidationException($(String.format("Must contain at least %d symbols%n", length)));
-        }
+        validateLength(value);
+        validateRegex(value);
+    }
+
+    private void validateRegex(String value) throws ValidationException {
         if (pattern != null && !pattern.matcher(value).matches()) {
-            throw new ValidationException($(message));
+            throw new ValidationException($(patternMessage == null ? DEFAULT_MESSAGE : patternMessage));
         }
+    }
+
+    private void validateLength(String value) throws ValidationException {
+        if ((minLength != null && value.length() < minLength) || (maxLength != null && value.length() > maxLength)) {
+            throw new ValidationException($(getMessageForLength()));
+        }
+    }
+
+    private String getMessageForLength() {
+        StringBuilder stringBuilder = new StringBuilder("Field must contain ");
+        if (minLength == null) {
+            stringBuilder.append(String.format("at most %d", maxLength));
+        } else if (maxLength == null) {
+            stringBuilder.append(String.format("at least %d", minLength));
+        } else {
+            stringBuilder.append(String.format("from %d to %d", minLength, maxLength));
+        }
+        stringBuilder.append(" symbols");
+        return stringBuilder.toString();
     }
 
 }

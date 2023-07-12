@@ -48,7 +48,7 @@ public class EnterPage extends WebPage {
     @Override
     public void action() {
         User user = getUser();
-        if(user!=null){
+        if (user != null) {
             abortWithRedirect(IndexPage.class);
         }
     }
