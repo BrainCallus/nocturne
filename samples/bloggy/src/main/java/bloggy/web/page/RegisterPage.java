@@ -23,7 +23,7 @@ public class RegisterPage extends WebPage {
                                     @Parameter(name = "name", stripMode = Parameter.StripMode.NONE) String name,
                                     @Parameter(name = "password", stripMode = Parameter.StripMode.NONE) String password) {
         addValidator("name", new OptionalValidator("[[a-zA-Z]+\\s{1}]*[[a-zA-Z]+]+", 3L, 50L, "Only latin letters and delimiters expected"));
-        addValidator("login", new OptionalValidator("[\\w+\\s{1}]*\\w+", 3L, 30L, "Only latin letters, numerals and delimiters expected"));
+        addValidator("login", new OptionalValidator("[\\w+\\s{1}]*\\w+", 2L, 30L, "Only latin letters, numerals and delimiters expected"));
         addValidator("password", new OptionalValidator("\\S+", 5L, 64L, "Should not contain delimiters"));
         addValidator("password", new Validator() {
             @Override
