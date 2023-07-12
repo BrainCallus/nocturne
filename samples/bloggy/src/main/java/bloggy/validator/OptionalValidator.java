@@ -43,7 +43,7 @@ public class OptionalValidator extends BaseValidator {
     }
 
     private void validateRegex(String value) throws ValidationException {
-        if (pattern != null && !pattern.matcher(value).matches()) {
+        if (!pattern.matcher(value).matches()) {
             throw new ValidationException($(patternMessage == null ? DEFAULT_MESSAGE : patternMessage));
         }
     }
